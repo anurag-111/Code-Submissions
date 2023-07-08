@@ -4,5 +4,4 @@
 
 ## Structure
 - Each problem category has its own directory.
-- Solutions to specific problems can be found within the respective category directories.
 - File names follow the format ProblemName.cpp, indicating the programming language used.
