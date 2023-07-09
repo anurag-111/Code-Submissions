@@ -1,5 +1,5 @@
 ## LeetCode Daily Submissions
-- This repository contains my solutions for LeetCode problems, organized by categories.
+- This repository contains my solutions for LeetCode problems.
 - It serves as a reference for code submissions.
 
 ## Structure
