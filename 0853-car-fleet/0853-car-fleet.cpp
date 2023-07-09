@@ -34,3 +34,18 @@ public:
         return carFleetCount;
     }
 };
+
+/*
+    Time Complexity: O(N log N)
+    ---------------------------
+
+    The time complexity is dominated by the sorting of the map carMap, which has N elements. 
+    The insertion of elements into the map takes O(log N) time for each element. 
+    Hence, the overall time complexity is O(N log N), where N is the number of cars.
+    
+    Space Complexity: O(N)
+    ----------------------
+
+    The space complexity is determined by the map carMap, which can store up to N elements. 
+    Therefore, the space complexity is O(N), where N is the number of cars.
+*/
