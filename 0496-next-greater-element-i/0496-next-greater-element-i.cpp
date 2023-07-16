@@ -1,23 +1,37 @@
+
 class Solution {
 public:
+    /**
+     * @brief Finds the next greater element for each element in nums1 from the corresponding positions in nums2.
+     * 
+     * @param nums1 The first input vector.
+     * @param nums2 The second input vector.
+     * @return A vector containing the next greater elements for each element in nums1.
+     */
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
-        stack<int> st;
-        vector<int> nextGreater(10001, -1);
-        vector<int> result(nums1.size());
+        stack<int> numStack; // Stack to keep track of elements in nums2
+        unordered_map<int, int> nextGreaterMap; // Store the next greater element for each element in nums2
+        vector<int> result(nums1.size(), -1); // Result vector to store the next greater elements for nums1 elements
         
-        for(int i = 0; i < nums2.size(); i++) {
-            while(!st.empty() && st.top() < nums2[i]) {
-                nextGreater[st.top()] = nums2[i];
-                st.pop();
-            } 
-            st.push(nums2[i]);
+        for (int num : nums2) {
+            // While the stack is not empty and the current num in nums2 is greater than the top element in the stack
+            while (!numStack.empty() && num > numStack.top()) {
+                // Update the next greater element for the top element in the stack
+                nextGreaterMap[numStack.top()] = num;
+                numStack.pop(); // Remove the processed element from the stack
+            }
+            numStack.push(num); // Push the current num in nums2 into the stack
         }
         
-        
-        for(int i = 0; i < result.size(); i++) {
-            result[i] = nextGreater[nums1[i]];
+        for (int i = 0; i < result.size(); i++) {
+            if (nextGreaterMap.find(nums1[i]) != nextGreaterMap.end()) {
+                result[i] = nextGreaterMap[nums1[i]];
+            } else {
+                result[i] = -1;
+            }
         }
         
         return result;
     }
 };
+
