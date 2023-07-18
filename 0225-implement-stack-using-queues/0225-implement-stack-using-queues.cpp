@@ -1,51 +1,41 @@
+#include <queue>
+
 class MyStack {
 public:
-    
-    queue<int> q1; // First queue used to simulate the stack
-    queue<int> q2; // Second queue used for temporary storage during push operation
-    
-    MyStack() {
-        // Constructor, no explicit initialization needed
-    }
-    
+    std::queue<int> q; // Queue to simulate the stack
+
+    MyStack() {} // Constructor, no explicit initialization needed
+
     // Pushes the given element 'x' onto the stack
     void push(int x) {
-        q2.push(x); // Push the element to the temporary queue (q2)
-        
-        // Move elements from q1 to q2 to maintain stack order
-        while (!q1.empty()) {
-            q2.push(q1.front());
-            q1.pop();
+        q.push(x); // Push the new element to the back of the queue
+        int size = q.size(); // Get the size of the queue
+
+        // Rotate the queue to move the newly pushed element to the front
+        while (size > 1) {
+            int element = q.front(); // Store the front element
+            q.push(element); // Move the front element to the back of the queue
+            q.pop(); // Remove the front element (rotate the queue)
+            size--; // Decrement the size to continue rotating
         }
-        
-        // Swap q1 and q2 to make q2 empty and keep the stack elements in q1
-        swap(q1, q2);
     }
-    
+
     // Removes and returns the top element of the stack.
     // If the stack is empty, returns -1.
     int pop() {
-        if (!q1.empty()) {
-            int element = q1.front(); // Retrieve the front element (top of stack)
-            q1.pop(); // Remove the front element (top of stack)
-            return element; // Return the removed element
-        } else {
-            return -1; // Stack is empty, return -1
-        }
+        int element = q.front(); // Retrieve the front element (top of stack)
+        q.pop(); // Remove the front element (top of stack)
+        return element; // Return the removed element
     }
-    
+
     // Returns the top element of the stack without removing it.
     int top() {
-        return q1.front(); // Return the front element (top of stack) from q1
+        return q.front(); // Return the front element (top of stack) from the queue
     }
-    
+
     // Checks if the stack is empty.
     bool empty() {
-        if (q1.empty()) {
-            return true; // If q1 is empty, the stack is empty, return true
-        } else {
-            return false; // If q1 is not empty, the stack is not empty, return false
-        }
+        return q.empty(); // Return true if the queue is empty (stack is empty), otherwise return false
     }
 };
 
@@ -57,17 +47,3 @@ public:
  * int param_3 = obj->top();
  * bool param_4 = obj->empty();
  */
-
-
-/*
-    Time Complexity:
-    
-    The time complexity for each operation is as follows:
-    - Push  : O(n)
-    - Pop   : O(1)
-    - Top   : O(1)
-    - Empty : O(1)
-
-    Space complexity : O(n)
-
-*/
