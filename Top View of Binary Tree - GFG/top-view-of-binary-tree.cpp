@@ -92,55 +92,59 @@ Node* buildTree(string str)
 
 
 class Solution {
-    public :
+public:
     vector<int> topView(Node* root) {
-         vector<int> result;
-         
-         if(root == NULL) {
-             return result;
-         }
-         
-         // (Node, Line) in queue
-         queue<pair<Node*, int>> q;
-         q.push({root, 0});
-         
-         // Mapping of (Line -> Node value)
-         map<int, int> mymap;
-         
-         while(!q.empty()) {
-             // Take out the top most (node, line)
-             auto it = q.front();
-             q.pop();
-             
-             // Node
-             Node* node = it.first;
-             
-             // Line
-             int line = it.second;
-             
-             if(mymap.find(line) == mymap.end()) {
-                 // Create a new mampping
-                 mymap[line] = node->data;
-             }
-             
-             
-             if(node->left) {
-                 q.push({node->left, line - 1});
-             }
-             
-             if(node->right) {
-                 q.push({node->right, line + 1});
-             }
-         }
-         
-         for(auto pair : mymap) {
-             result.push_back(pair.second);
-         }
-         
-         return result;
+        vector<int> result;
+        
+        // If the tree is empty, return an empty result vector
+        if (root == NULL) {
+            return result;
+        }
+        
+        // (Node, Line) pairs in the queue
+        queue<pair<Node*, int>> q;
+        q.push({root, 0});
+        
+        // Mapping of (Line -> Node value) to store the top view nodes
+        map<int, int> mymap;
+        
+        while (!q.empty()) {
+            // Take out the top most (node, line)
+            auto it = q.front();
+            q.pop();
+            
+            // Extract Node and Line values from the pair
+            Node* node = it.first;
+            int line = it.second;
+            
+            // If this line is not yet mapped, create a new mapping
+            if (mymap.find(line) == mymap.end()) {
+                mymap[line] = node->data;
+            }
+            
+            // Add the left child to the queue with the line value decremented by 1
+            if (node->left) {
+                q.push({node->left, line - 1});
+            }
+            
+            // Add the right child to the queue with the line value incremented by 1
+            if (node->right) {
+                q.push({node->right, line + 1});
+            }
+        }
+        
+        // Push the values of the map into the result vector
+        for (auto pair : mymap) {
+            result.push_back(pair.second);
+        }
+        
+        return result;
     }
 };
 
+
+// Time complexity : O(N * log(N))
+// O(N) (enqueue and dequeue operations) * O(log(N)) (map insertion) + O(N) (result vector construction) = O(N * log(N)) + O(N) = O(N * log(N))
 
 
 //{ Driver Code Starts.
