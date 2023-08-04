@@ -96,103 +96,90 @@ Node* buildTree(string str)
 
 
 // } Driver Code Ends
-/* A binary tree Node
-struct Node
-{
-    int data;
-    Node* left, * right;
-}; */
-
-
-
 
 class Solution {
 private:
-
-    // 1. Left boundary nodes
-    void traverseLeft(Node* root, vector<int> &ans) {
-        if(root == NULL || (root->left == NULL && root->right == NULL)) {
+    // Step 1: Traverse the left boundary nodes of the binary tree
+    // - Add the current node's value to the 'ans' vector
+    // - Recursively traverse the left child if it exists, otherwise, traverse the right child
+    void traverseLeftBoundary(Node* root, vector<int> &ans) {
+        if (root == NULL || (root->left == NULL && root->right == NULL)) {
+            // Base case: If the current node is NULL or it is a leaf node, stop the traversal
             return;
         }
         
-        ans.push_back(root->data);
+        ans.push_back(root->data); // Add the current node's value to the answer
         
-        if(root->left) {
-            traverseLeft(root->left, ans);
+        if (root->left) {
+            traverseLeftBoundary(root->left, ans); // Traverse the left child
         } else {
-            traverseLeft(root->right, ans);
+            traverseLeftBoundary(root->right, ans); // Traverse the right child
         }
     }
     
-    // 2. Leaf nodes
-    void traverseLeaf(Node* root, vector<int> &ans) {
-        if(root == NULL ) {
+    // Step 2: Traverse the leaf nodes of the binary tree
+    // - Add the current node's value to the 'ans' vector if it is a leaf node
+    // - Recursively traverse both left and right children
+    void traverseLeafNodes(Node* root, vector<int> &ans) {
+        if (root == NULL) {
+            // Base case: If the current node is NULL, stop the traversal
             return;
         }
         
-        if(root->left == NULL && root->right == NULL) {
+        if (root->left == NULL && root->right == NULL) {
+            // If the current node is a leaf node, add its value to the answer
             ans.push_back(root->data);
         }
         
-        traverseLeaf(root->left, ans);
-        traverseLeaf(root->right, ans);
+        traverseLeafNodes(root->left, ans); // Traverse the left child
+        traverseLeafNodes(root->right, ans); // Traverse the right child
     }
     
-    // 3. Reverse right boundary nodes
-    void traverseRight(Node* root, vector<int> &ans) {
-        if(root == NULL || (root->left == NULL && root->right == NULL)) {
+    // Step 3: Traverse the right boundary nodes of the binary tree in reverse order
+    // - Recursively traverse the right child if it exists, otherwise, traverse the left child
+    // - Add the current node's value to the 'ans' vector after traversing its children
+    void traverseRightBoundary(Node* root, vector<int> &ans) {
+        if (root == NULL || (root->left == NULL && root->right == NULL)) {
+            // Base case: If the current node is NULL or it is a leaf node, stop the traversal
             return;
         }
         
-        if(root->right) {
-            traverseRight(root->right, ans);
+        if (root->right) {
+            traverseRightBoundary(root->right, ans); // Traverse the right child
         } else {
-            traverseRight(root->left, ans);
+            traverseRightBoundary(root->left, ans); // Traverse the left child
         }
         
-        ans.push_back(root->data);
+        ans.push_back(root->data); // Add the current node's value to the answer
     }
 
 public:
-    vector <int> boundary(Node *root)
-    {
+    // Function to find the boundary nodes of a binary tree
+    vector<int> boundary(Node *root) {
         vector<int> ans;
         
-        if(root == NULL) {
+        if (root == NULL) {
+            // If the root is NULL, return an empty vector as there are no boundary nodes
             return {};
         }
         
-        ans.push_back(root->data);
+        ans.push_back(root->data); // Add the root's value to the answer
         
-        // 1. Left subtree boundary nodes
-        traverseLeft(root->left, ans);
+        // Step 1: Traverse the left boundary nodes of the binary tree
+        traverseLeftBoundary(root->left, ans);
         
-        // 2.1. Left subtree leaf nodes
-        traverseLeaf(root->left, ans);
+        // Step 2.1: Traverse the left subtree leaf nodes
+        traverseLeafNodes(root->left, ans);
         
-        // 2.2. Right subtree leaf nodes
-        traverseLeaf(root->right, ans);
+        // Step 2.2: Traverse the right subtree leaf nodes
+        traverseLeafNodes(root->right, ans);
         
-        // 3. Right subtree boundary nodes
-        traverseRight(root->right, ans);
+        // Step 3: Traverse the right boundary nodes of the binary tree in reverse order
+        traverseRightBoundary(root->right, ans);
     
-        return ans;
-        
+        return ans; // Return the vector containing the boundary nodes of the binary tree
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //{ Driver Code Starts.
