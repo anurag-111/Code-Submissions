@@ -24,45 +24,45 @@ Node* newNode(int val)
 // } Driver Code Ends
 
 
-// Should return right view of tree
 class Solution
 { 
-    public:
-        // Variation of pre order traversal : Root, Right, Left
-        void dfs(Node *root, int level, queue<Node*> &q) {
-            if(root == NULL) {
-                return;
-            }
-            
-            if(level == q.size()) {
-                // Add this node
-                q.push(root);
-            }
-            
-            dfs(root->right, level + 1, q);
-            dfs(root->left, level + 1, q);
-        }
-        
-        
-        vector<int> rightView(Node *root)
-        {
-           vector<int> result;
-           queue<Node*> q;
-           
-           dfs(root, 0, q);
-        
-           while(!q.empty()) {
-               auto it = q.front();
+public:
+    vector<int> rightView(Node *root) {
+       if(root == NULL) {
+           return {};
+       }
+       
+       vector<int> result;
+       queue<Node*> q;
+       q.push(root);
+       
+       while(!q.empty()) {
+           int size = q.size();
+           for(int i = 0; i < size; i++) {
+               // Extract
+               Node* node = q.front();
                q.pop();
                
-               int value = it->data;
+               // Add nodes
+               if(node->right) {
+                   q.push(node->right);
+               }
                
-               result.push_back(value);
+               if(node->left) {
+                   q.push(node->left);
+               }
+               
+               // Result
+               if(i == 0) {
+                   result.push_back(node->data);
+               }
            }
-           
-           return result;
-        }
+       }
+       
+       return result;
+    }
 };
+
 
 
 
