@@ -99,10 +99,13 @@ class Solution
             return;
         }        
         
-        if(mapping.find(x) == mapping.end() || y < mapping[x].second) {
+        if(mapping.find(x) == mapping.end()) {
             // Create a new mapping
             mapping[x] = {root -> data, y};
-        } els
+        } else if(y < mapping[x].second) {
+            // Update the existing mapping
+            mapping[x] = {root -> data, y};
+        } 
         
         dfs(root->left, x - 1, y + 1, mapping);
         dfs(root->right, x + 1, y + 1, mapping);
