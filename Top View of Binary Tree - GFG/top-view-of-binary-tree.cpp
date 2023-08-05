@@ -91,60 +91,42 @@ Node* buildTree(string str)
 // } Driver Code Ends
 
 
-class Solution {
-public:
-    vector<int> topView(Node* root) {
+class Solution
+{
+    private:
+    void dfs(Node* root, int x, int y, map<int, pair<int, int>> &mapping) {
+        if(root == NULL) {
+            return;
+        }        
+        
+        if(mapping.find(x) == mapping.end() || y < mapping[x].second) {
+            // Create a new mapping
+            mapping[x] = {root -> data, y};
+        } els
+        
+        dfs(root->left, x - 1, y + 1, mapping);
+        dfs(root->right, x + 1, y + 1, mapping);
+    }
+    
+    
+    
+    public:
+    vector<int> topView(Node *root)
+    {
+        map<int, pair<int, int>> mapping;
         vector<int> result;
         
-        // If the tree is empty, return an empty result vector
-        if (root == NULL) {
-            return result;
-        }
+        dfs(root, 0, 0, mapping);
         
-        // (Node, Line) pairs in the queue
-        queue<pair<Node*, int>> q;
-        q.push({root, 0});
-        
-        // Mapping of (Line -> Node value) to store the top view nodes
-        map<int, int> mymap;
-        
-        while (!q.empty()) {
-            // Take out the top most (node, line)
-            auto it = q.front();
-            q.pop();
-            
-            // Extract Node and Line values from the pair
-            Node* node = it.first;
-            int line = it.second;
-            
-            // If this line is not yet mapped, create a new mapping
-            if (mymap.find(line) == mymap.end()) {
-                mymap[line] = node->data;
-            }
-            
-            // Add the left child to the queue with the line value decremented by 1
-            if (node->left) {
-                q.push({node->left, line - 1});
-            }
-            
-            // Add the right child to the queue with the line value incremented by 1
-            if (node->right) {
-                q.push({node->right, line + 1});
-            }
-        }
-        
-        // Push the values of the map into the result vector
-        for (auto pair : mymap) {
-            result.push_back(pair.second);
+        for(auto pair : mapping) {
+            result.push_back(pair.second.first);
         }
         
         return result;
     }
+
 };
 
-
-// Time complexity : O(N * log(N))
-// O(N) (enqueue and dequeue operations) * O(log(N)) (map insertion) + O(N) (result vector construction) = O(N * log(N)) + O(N) = O(N * log(N))
 
 
 //{ Driver Code Starts.
