@@ -81,44 +81,53 @@ Node* buildTree(string str) {
 }
 
 // } Driver Code Ends
+/* The Node structure is
+struct Node
+{
+    int data;
+    Node* left;
+    Node* right;
+}; */
 
-// data, left, right
 class Solution{
   private:
-    int traversal(Node *root) {
-        // Found null, return 0
+    // int depth;
+    
+    int dfs(Node *root) {
         if(root == NULL) {
             return 0;
         }
-        // Found a leaf node, return 1
+        
         if(root->left == NULL && root->right == NULL) {
             return 1;
         }
         
-        int leftValue = INT_MAX;
-        int rightValue = INT_MAX;
+        int leftVal = INT_MAX;
+        if(root -> left) 
+            leftVal = dfs(root->left);
         
-        // Further traversals
-        if(root->left) {
-            leftValue = traversal(root->left);
-        }
         
-        if(root->right) {
-            rightValue = traversal(root->right);
-        }
+        int rightVal = INT_MAX;
+        if(root->right)
+            rightVal = dfs(root->right);
+
         
-        // Return the minimum depth, + 1 for the root node participation
-        return min(leftValue, rightValue) + 1;
+        return 1 + min(leftVal, rightVal);
     }
   
   public:
     int minDepth(Node *root) {
-        return traversal(root);
+        // depth = 0;
+        
+        if(root == NULL) {
+            return 0;
+        }
+        
+        return dfs(root);
+        
     }
 };
 
-// Time Complexity : O(N), N being the number of nodes
-// Space Complexity : O(H), H being the height of the tree
 
 
 //{ Driver Code Starts.
