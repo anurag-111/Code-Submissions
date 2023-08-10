@@ -21,27 +21,29 @@ int main() {
 
 
 int findElement(int arr[], int n) {
-    // Create two arrays to store the maximum element on the left and minimum element on the right
-    int leftMax[n], rightMin[n];
-    leftMax[0] = INT_MIN;
-    rightMin[n - 1] = INT_MAX;
+    int max[n];
+    int min[n];
     
-    // Fill the leftMax array with maximum element on the left side of each element
-    for (int i = 1; i < n; i++) {
-        leftMax[i] = max(leftMax[i - 1], arr[i - 1]);
+    int big = arr[0];
+    int small = arr[n - 1];
+    
+    for(int i = 0; i < n; i++) {
+        big = std::max(arr[i], big);
+        max[i] = big;
     }
     
-    // Fill the rightMin array with minimum element on the right side of each element
-    for (int i = n - 2; i >= 0; i--) {
-        rightMin[i] = min(rightMin[i + 1], arr[i + 1]);
+    for(int i = n - 1; i >= 0; i--) {
+        small = std::min(arr[i], small);
+        min[i] = small;
     }
     
-    // Find the element which satisfies the condition
-    for (int i = 1; i < n - 1; i++) {
-        if (arr[i] >= leftMax[i] && arr[i] <= rightMin[i]) {
-            return arr[i];
+    for(int i = 0; i < n; i++) {
+        if(i != 0 && i < n - 1) {
+            if(max[i] == min[i]) {
+                return max[i];
+            }
         }
     }
     
-    return -1; // If no such element is found
+    return -1;
 }
