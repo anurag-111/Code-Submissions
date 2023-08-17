@@ -11,30 +11,26 @@
  */
 class Solution {
 private:
-    // This function calculates the sum of values in a tree.
-    int sum(TreeNode* node) {
-        if (node == NULL) {
-            return 0; // If the node is empty, its sum is 0.
+    bool isSum(TreeNode* node) {
+        if (node == NULL || (node->left == NULL && node->right == NULL)) {
+            return true;
         }
         
-        // If the node is not empty, add its value to the sum of its left and right children.
-        return node->val + sum(node->left) + sum(node->right);
+        int childrenValue = 0;
+        if (node->left != NULL) {
+            childrenValue += node->left->val;
+        }
+        if (node->right != NULL) {
+            childrenValue += node->right->val;
+        }
+        
+        return (node->val == childrenValue) && checkTree(node->left) && checkTree(node->right);
     }
     
 public:
-    // This function checks if a tree satisfies a specific condition.
+    // Function to check whether all nodes of a tree have the value 
+    // equal to the sum of their child nodes.
     bool checkTree(TreeNode* root) {
-        if (root == NULL) {
-            return true; // An empty tree automatically satisfies the condition.
-        }
-        
-        int rootValue = root->val; // Get the value of the root node.
-        
-        // Calculate the sum of values of the left and right children.
-        int childrenValue = sum(root->left) + sum(root->right);
-        
-        // Compare the value of the root node with the sum of its children's values.
-        // If they are equal, then the condition is satisfied, and we return true.
-        return rootValue == childrenValue;
+        return isSum(root);
     }
 };
