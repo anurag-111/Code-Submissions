@@ -1,40 +1,32 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
-
 class Solution {
-private:
-    int diameter; // Variable to store the diameter of the binary tree.
-
-    // Helper function to calculate the maximum depth of each subtree rooted at the given node.
-    int calculateMaxDepth(TreeNode* root) {
-        if (root == nullptr) {
+private: 
+    int calculateDiameter(TreeNode *root, int &diameter) {
+        // Base Case: If the node is NULL, return 0.
+        if (root == NULL) {
             return 0;
         }
 
-        // Recursively calculate the maximum depth of the left and right subtrees.
-        int leftDepth = calculateMaxDepth(root->left);
-        int rightDepth = calculateMaxDepth(root->right);
+        // Recursive calls to calculate heights of left and right subtrees.
+        int leftHeight = calculateDiameter(root->left, diameter);
+        int rightHeight = calculateDiameter(root->right, diameter);
 
-        // Update the diameter if the current path is longer.
-        diameter = max(diameter, (leftDepth + rightDepth));
+        // The height of the current node
+        int height = 1 + max(leftHeight, rightHeight);
 
-        // Return the maximum depth of the subtree rooted at the current node.
-        return 1 + max(leftDepth, rightDepth);
+        // The current diameter passing through the current node
+        int currentDiameter = leftHeight + rightHeight;
+
+        // Update the overall maximum diameter found so far
+        diameter = max(diameter, currentDiameter);
+
+        // Return the height of the current node
+        return height;
     }
 
 public:
-    int diameterOfBinaryTree(TreeNode* root) {
-        diameter = 0; // Initialize the diameter to 0 before the calculation.
-        calculateMaxDepth(root); // Start the recursive traversal to calculate the max depth.
-        return diameter; // Return the final diameter of the binary tree.
+    int diameterOfBinaryTree(TreeNode *root) {
+        int diameter = 0;
+        calculateDiameter(root, diameter);
+        return diameter;
     }
 };
