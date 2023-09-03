@@ -7,22 +7,12 @@ public:
          
          TreeNode *current = root;
          
-         while(current) {
-             if(val > current -> val) {
-                 if(current -> right == NULL) {
-                     current -> right = new TreeNode(val);
-                     break;
-                 }
-                 current = current -> right;
-             } else {
-                 // val < root -> data
-                 if(current -> left == NULL) {
-                     current -> left = new TreeNode(val);
-                     break;
-                 }
-                 current = current -> left;
-             }
+         if(val > current -> val) {
+             current -> right = insertIntoBST(current -> right, val);
+         } else {
+             current -> left = insertIntoBST(current -> left, val);
          }
+
          return root;
     }
 };
