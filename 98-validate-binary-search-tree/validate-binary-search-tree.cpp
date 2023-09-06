@@ -11,23 +11,23 @@
  */
 class Solution {
 private:
-    bool isValid(TreeNode* root, TreeNode* minNode, TreeNode* maxNode) {
-        if (root == nullptr) {
+    bool isValid(TreeNode *root, TreeNode *minNode, TreeNode *maxNode) {
+        if(root == NULL) {
             return true;
         }
 
-        if ((minNode != nullptr && root->val <= minNode->val) || (maxNode != nullptr && root->val >= maxNode->val)) {
+        if((minNode != NULL && root -> val <= minNode -> val) || (maxNode != NULL && root -> val >= maxNode -> val)) {
             return false;
         }
 
-        bool leftValid = isValid(root->left, minNode, root);
-        bool rightValid = isValid(root->right, root, maxNode);
-        
+        bool leftValid = isValid(root -> left, minNode, root);
+        bool rightValid = isValid(root -> right, root, maxNode);
+
         return leftValid && rightValid;
     }
-    
+
 public:
-    bool isValidBST(TreeNode* root) {
-        return isValid(root, nullptr, nullptr);
+    bool isValidBST(TreeNode *root) {
+        return isValid(root, NULL, NULL);
     }
 };
