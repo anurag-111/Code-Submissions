@@ -22,3 +22,9 @@ public:
         return inorderTraversal[k - 1];        
     }
 };
+
+// In summary:
+
+// Time Complexity: O(N)
+// Space Complexity: O(N)
+// The code performs an in-order traversal of the binary tree to find the k-th smallest element, and both the time and space complexity are linearly dependent on the number of nodes in the tree.
