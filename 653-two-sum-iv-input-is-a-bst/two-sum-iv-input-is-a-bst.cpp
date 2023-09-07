@@ -20,15 +20,13 @@ public:
             cout << num << " ";
         }
 
-        int flag = 0;
         // 2. Apply two pointer approach
         int i = 0;
         int j = inorderTraversal.size() - 1;
         while(i < j) {
             int sum = inorderTraversal[i] + inorderTraversal[j];
             if(sum == k) {
-                flag = 1;
-                break;
+                return true;
             } else if(sum > k) {
                 j--;
             } else {
@@ -36,10 +34,6 @@ public:
             }
         }
 
-        if(flag) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 };
