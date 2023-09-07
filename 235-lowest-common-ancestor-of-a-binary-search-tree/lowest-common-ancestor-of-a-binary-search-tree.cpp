@@ -1,26 +1,28 @@
-// Recursive Approach 
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
 class Solution {
-private:
-    TreeNode* calculateLCA(TreeNode *root, TreeNode *p, TreeNode *q) {
-        if(root == NULL) {
-            return NULL;
-        }
-
-        if(root -> val > p -> val && root -> val > q -> val) {
-            return calculateLCA(root -> left, p, q);
-        } 
-        
-        if(root -> val < p -> val && root -> val < q -> val) {
-            return calculateLCA(root -> right, p, q);
-        }
-
-        return root;
-    }
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        return calculateLCA(root, p, q);
+        while(root) {
+            if(root -> val > p -> val && root -> val > q -> val) {
+                // Left sub-tree
+                root = root -> left;
+            } else if(root -> val < p -> val && root -> val < q -> val) {
+                // Right sub-tree
+                root = root -> right;
+            } else {
+                // Found the LCA
+                return root;
+            }
+        }
+        return NULL;
     }
 };
-
-// TC : O(N)
-// SC : O(H)
