@@ -85,33 +85,35 @@ Node* buildTree(string str)
 // return the Kth largest element in the given BST rooted at 'root'
 class Solution {
     private:
-    void findLarge(Node *root, vector<int> &inorderTraversal) {
+    void findLarge(Node *root, int K, int &count, vector<int> &inorderTraversal, Node *&kthLargestNode) {
         if(root == NULL) {
             return;
         }
         
         // Left, Root, Right
-        findLarge(root -> left, inorderTraversal);
+        findLarge(root -> right, K, count, inorderTraversal, kthLargestNode);
+        count++;
         
-        inorderTraversal.push_back(root -> data);
+        // Condition
+        if(count == K) {
+            kthLargestNode = root;
+            return;
+        }
         
-        findLarge(root -> right, inorderTraversal);
+        findLarge(root -> left, K, count, inorderTraversal, kthLargestNode);
     }
     
     
     public:
     int kthLargest(Node *root, int K) {
+        int count = 0;
+        Node *kthLargestNode = NULL;
         vector<int> inorderTraversal;
-        findLarge(root, inorderTraversal);
-        
-        // for(int num : inorderTraversal) {
-        //     cout << num << " ";
-        // }
-        
-        int size = inorderTraversal.size();
-        return inorderTraversal[size - K];
+        findLarge(root, K, count, inorderTraversal, kthLargestNode);
+        return kthLargestNode -> data;
     }
 };
+
 
 //{ Driver Code Starts.
 
