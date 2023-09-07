@@ -90,7 +90,7 @@ class Solution {
             return;
         }
         
-        // Left, Root, Right
+        // Right, Root, Left (Reverse In-order traversal)
         findLarge(root -> right, K, count, inorderTraversal, kthLargestNode);
         count++;
         
