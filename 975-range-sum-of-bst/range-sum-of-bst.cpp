@@ -1,23 +1,22 @@
-// val, left, right
 class Solution {
 private:
-    void sumBST(TreeNode* root, int low, int high, int &sum) {
-        if(root == NULL) {
+    void calculateSumInRange(TreeNode* root, int low, int high, int &sum) {
+        if (root == nullptr) {
             return;
         }
 
-        sumBST(root -> left, low, high, sum);
-        sumBST(root -> right, low, high, sum);
+        calculateSumInRange(root->left, low, high, sum);
+        calculateSumInRange(root->right, low, high, sum);
 
-        if(root -> val >= low && root -> val <= high) {
-            sum += root -> val;
-        } 
-        return;     
+        if (root->val >= low && root->val <= high) {
+            sum += root->val;
+        }
     }
+
 public:
     int rangeSumBST(TreeNode* root, int low, int high) {
         int sum = 0;
-        sumBST(root, low, high, sum);
+        calculateSumInRange(root, low, high, sum);
         return sum;
     }
 };
