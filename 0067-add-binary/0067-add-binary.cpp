@@ -28,7 +28,6 @@ Time Complexity: O(max(N, M))
 N and M are the lengths of the input binary strings 'a' and 'b'.
 The code iterates through both input strings once, processing each digit.
 Space Complexity: O(max(N, M))
-
 The primary space usage comes from the 'res' string, which stores the binary sum.
 In the worst case, the result string can have a length equal to the longer of the two input strings, so the space complexity is O(max(N, M)).
 */
