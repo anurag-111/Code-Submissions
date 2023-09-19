@@ -24,7 +24,6 @@ public:
 
 /*
 Time Complexity: O(max(N, M))
-
 N and M are the lengths of the input binary strings 'a' and 'b'.
 The code iterates through both input strings once, processing each digit.
 Space Complexity: O(max(N, M))
