@@ -1,3 +1,7 @@
+// Approach 1 : 
+// TC : O (m * n)
+// SC : O(1)
+
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
