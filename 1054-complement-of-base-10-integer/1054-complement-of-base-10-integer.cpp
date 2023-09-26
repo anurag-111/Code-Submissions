@@ -1,11 +1,26 @@
 class Solution {
- public:
-  int bitwiseComplement(int N) {
-    int mask = 1;
+public:
+    int bitwiseComplement(int n) {
+        if(n == 0) {
+            return 1;
+        }
 
-    while (mask < N)
-      mask = (mask << 1) + 1;
+        int mask = 1;
+        while(mask <= n) {
+            n = n ^ mask;
+            mask = mask << 1;
+        }
 
-    return mask ^ N;
-  }
+        return n;
+    }
 };
+
+/*
+
+5 -> 101
+2 -> 010
+return 2;
+
+Use XOR operation
+
+*/
