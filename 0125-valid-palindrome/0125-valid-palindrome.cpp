@@ -1,10 +1,15 @@
 class Solution {
 private:
     bool is_alnum(char ch) {
-        return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9');
+        if((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
     char to_lower(char ch) {
-        if((ch >= 'A' && ch <= 'Z')) {
+        if(ch >='A' && ch <= 'Z') {
             return ch + 32;
         } else {
             return ch;
@@ -13,25 +18,27 @@ private:
 
 public:
     bool isPalindrome(string s) {
-        string newString;
+        string str;
         for(int i = 0; i < s.size(); i++) {
             if(is_alnum(s[i])) {
-                newString += to_lower(s[i]);
+                str += to_lower(s[i]);
             }
         }
-        for(char ch : newString) {
+
+        for(char ch : str) {
             cout << ch;
         }
-        
+
         int i = 0;
-        int j = newString.size() - 1;
+        int j = str.size() - 1;
         while(i < j) {
-            if(newString[i] != newString[j]) {
+            if(str[i] != str[j]) {
                 return false;
             }
             i++;
             j--;
         }
+
         return true;
     }
 };
