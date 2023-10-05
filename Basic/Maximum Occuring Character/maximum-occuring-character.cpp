@@ -8,25 +8,17 @@ using namespace std;
 class Solution {
     public:
     //Function to find the maximum occurring character in a string.
-    char getMaxOccuringChar(string str){
-        int size = 26;
-        vector<int> freq(size, 0);
-        
-        for(int i = 0; i < str.size(); i++) {
-            int index = str[i] - 'a';
-            freq[index]++;
+    char getMaxOccuringChar(string str) {
+        vector<int> charFreq(26, 0);
+        for(char ch : str) {
+            charFreq[ch - 'a']++;
         }
         
-        // for(int frq : freq) {
-        //     cout << frq << " ";
-        // }
-        // cout << endl;
-        
-        int maxCount = INT_MIN;
-        char maxChar = ' ';
-        for(int i = 0; i < 26; i++) {
-            if(maxCount < freq[i]) {
-                maxCount = freq[i];
+        int maxOcc = INT_MIN;
+        char maxChar;
+        for(int i = 0; i < charFreq.size(); i++) {
+            if(charFreq[i] > maxOcc) {
+                maxOcc = charFreq[i];
                 maxChar = i + 'a';
             }
         }
