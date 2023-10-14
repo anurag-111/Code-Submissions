@@ -16,3 +16,6 @@ public:
         return result;      
     }
 };
+
+// Time complexity : O(13) -> O(1)
+// Space complexity : O(13) -> O(1)
