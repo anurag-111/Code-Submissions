@@ -1,30 +1,31 @@
 class Solution {
 public:
-    int myAtoi(string s) {
-        int index = 0, sign = 1;
+    int myAtoi(string str) {
+        int sign = 1;
+        int index = 0;
+        int n = str.size();
         long long result = 0;
-        const int n = s.size();
-
-        while (index < n && isspace(s[index])) {
+        
+        while(index < n && isspace(str[index])) {
+            index++;
+        }      
+        
+        if(index < n && (str[index] == '-') || str[index] == '+') {
+            sign = (str[index] == '-') ? -1 : 1;
             index++;
         }
-
-        if (index < n && (s[index] == '-' || s[index] == '+')) {
-            sign = (s[index++] == '-') ? -1 : 1;
-        }
-
-        while (index < n && isdigit(s[index])) {
-            result = result * 10 + (s[index++] - '0');
-
-            if (result * sign > INT_MAX) {
-                return INT_MAX;
+        
+        while(index < n && isdigit(str[index])) {
+            // Convert the character into a integer
+            int digit = str[index] - '0';
+            if(result > (INT_MAX - digit) / 10) {
+                return (sign == 1) ? INT_MAX : INT_MIN;
             }
-
-            if (result * sign < INT_MIN) {
-                return INT_MIN;
-            }
+            
+            result = result * 10 + digit;
+            index++;
         }
-
-        return static_cast<int>(result * sign);
+        
+        return (result * sign);
     }
 };
