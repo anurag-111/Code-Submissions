@@ -1,33 +1,47 @@
 class Solution {
 public:
-    string longestPalindrome(string str) {
-        vector<vector<bool>> dp(str.size(), vector<bool>(str.size(), false));
-        int length = 0;
+    string longestPalindrome(string s) {
+        int size = s.size();
         int start = 0;
-        for(int gap = 0; gap < str.size(); gap++) {
-            for(int i = 0, j = gap; j < str.size(); i++, j++) {
-                if(gap == 0) {
-                    dp[i][j] = true;
-                } else if(gap == 1) {
-                    if(str[i] == str[j]) {
-                        dp[i][j] = true;
-                        start = i;
-                    }
-                } else {
-                    if(str[i] == str[j] && (dp[i + 1][j - 1] == true)) {
-                        dp[i][j] = true;
-                        start = i;
-                    } else {
-                        dp[i][j] = false;
-                    }
-                }
-                
-                if(dp[i][j] && length < gap + 1) {
-                    length = gap + 1;
-                }
-            }
+        int maxLength = 1;
+        
+        if(size == 1) {
+            return s;
         }
         
-        return str.substr(start, length);
+        for(int i = 1; i < size; i++) {
+            // For odd length palindrome -> Only one center, so no need of checking of the middle element
+            // Left -> indicates the left pointer to the current center
+			// Right -> indicates the right pointer to the current center
+			
+			int left = i - 1;
+			int right = i + 1;
+			while(left >= 0 && right < size && s[left] == s[right]){
+                int currentLength = right - left + 1;
+                if(currentLength > maxLength) {
+                    start = left;
+                    maxLength = currentLength;
+                }
+                left--;
+                right++;
+            }
+            
+            // For even length palindrome -> Two centers, so we need to check for both center elements as well.
+            // Left pointer -> points to the C1 (center 1)
+            // Right pointer -> points to the C2 (center 2)
+			left = i - 1;
+            right = i;
+            while(left >= 0 && right < size && s[left] == s[right]) {
+                int currentLength = right - left + 1;
+                if(currentLength > maxLength) {
+                    start = left;
+                    maxLength = currentLength;
+                }
+                left--;
+                right++;
+            }            
+        }
+        
+        return s.substr(start, maxLength);
     }
 };
