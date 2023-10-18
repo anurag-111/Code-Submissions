@@ -1,6 +1,9 @@
 class Solution {
 public:
     string longestPalindrome(string s) {
+        if(s.size() <= 1) {
+            return s;
+        }
         int maxLen = 1;
         int start = 0;
         for(int i = 0; i < s.size(); i++) {
@@ -34,6 +37,5 @@ public:
     }
 };
 
-// babad
-// b, ba, bab, baba...
-// a, bab, baba..
+// tc : O(N * N)
+// sc : O(1)
