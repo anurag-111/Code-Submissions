@@ -18,3 +18,9 @@ public:
         return maxProduct;
     }
 };
+
+// case 1 : where all integers are positive
+// case 2 : both +ve and -ve integers are present
+       //  2 a. Even number of -ve integers
+       //  2 b. Odd number of -ve integers
+// case 3 : +ve, -ve and 0 also exists
