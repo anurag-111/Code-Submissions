@@ -1,66 +1,95 @@
+// Example 1:
+
+// Input: nums = [4,5,6,7,0,1,2], target = 0
+// Output: 4
+// Example 2:
+
+// Input: nums = [4,5,6,7,0,1,2], target = 3
+// Output: -1
+// Example 3:
+
+// Input: nums = [1], target = 0
+// Output: -1
+ 
+
+// Constraints:
+
+// 1 <= nums.length <= 5000
+// -104 <= nums[i] <= 104
+// All values of nums are unique.
+// nums is an ascending array that is possibly rotated.
+// -104 <= target <= 104
+
+
+// Func name : search
+// return : int
+// parameters : nums, target
+
 class Solution {
-public:
-    /**
-     * Search for the target value in a rotated sorted array.
-     * 
-     * @param nums The rotated sorted array.
-     * @param target The value to search for.
-     * @return The index of the target value if found, otherwise -1.
-     */
-    int search(vector<int>& nums, int target) {
-        int left = 0;                       // Leftmost index of the search range
-        int right = nums.size() - 1;        // Rightmost index of the search range
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;  // Calculate the middle index
-
-            if (nums[mid] == target) {
-                // Target found at index 'mid'
-                return mid;
-            }
-
-            if (nums[left] <= nums[mid]) {
-                // Left array is sorted
-
-                if (nums[left] <= target && target <= nums[mid]) {
-                    // Target is within the sorted range of the left array
-                    right = mid - 1;  // Adjust the right pointer
-                } else {
-                    // Target is not within the sorted range of the left array
-                    left = mid + 1;  // Adjust the left pointer
+  public :
+        int search(vector<int> &nums, int target) {
+            int low = 0;
+            int high = nums.size() - 1;
+            
+            while(low <= high) {
+                int mid = low + (high - low) / 2;
+                
+                // Check if we found the target
+                if(nums[mid] == target) {
+                    return mid;
                 }
-            } else {
-                // Right array is sorted
-
-                if (nums[mid] <= target && target <= nums[right]) {
-                    // Target is within the sorted range of the right array
-                    left = mid + 1;  // Adjust the left pointer
-                } else {
-                    // Target is not within the sorted range of the right array
-                    right = mid - 1;  // Adjust the right pointer
+                
+                // Check if the left sub-array is sorted
+                if(nums[low] <= nums[mid]) {
+                    // Now check for the target to exist in this range
+                    if(nums[low] <= target && target <= nums[mid]) {
+                        // Target exists in this range
+                        high = mid - 1;
+                    } else {
+                        // Target does not exists in this range
+                        low = mid + 1;
+                    }   
+                } 
+                
+                // Check if the right sub-array is sorted
+                else if(nums[mid] <= nums[high]) {
+                    // Now check for the target to exist in this range
+                    if(nums[mid] <= target && target <= nums[high]) {
+                        // Target exists in this range
+                        low = mid + 1;
+                    } else {
+                        // Target does not exists in this range
+                        high = mid - 1;
+                    }
                 }
-            }
+            }            
+            
+            return -1;
         }
-
-        // Target not found
-        return -1;
-    }
 };
 
-/*
-Time Complexity: O(log N)
 
-The search is performed using binary search, which reduces 
-the search space by half in each iteration. Hence, the time 
-complexity is logarithmic, O(log N), where N is the number 
-of elements in the input array.
-    
-Space Complexity: O(1)
 
-The algorithm uses a constant amount of extra space for the 
-variables left, right, and mid. Therefore, the space complexity 
-is O(1), indicating constant space usage regardless of the input size.
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
