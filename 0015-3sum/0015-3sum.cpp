@@ -1,45 +1,44 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        vector<vector<int>> triplets;
         sort(nums.begin(), nums.end());
-
+        vector<vector<int>> triplets;
+        
         for(int i = 0; i < nums.size() - 2; i++) {
-            // Duplicate 1st
+            // Ignoring the 1st duplicative element
             if(i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
-
+            
             int left = i + 1;
             int right = nums.size() - 1;
             int target = - (nums[i]);
-
+            
             while(left < right) {
                 int sum = nums[left] + nums[right];
-                if(sum < target) {
-                    left++;
-                } else if(sum > target) {
-                    right--;
-                } else{
-                    // Found
+                if(sum == target) {
                     triplets.push_back({nums[i], nums[left], nums[right]});
-
-                    // Duplicate 2nd
+                    
+                    // Ignoring the 2nd duplicative element
                     while(left < right && nums[left] == nums[left + 1]) {
                         left++;
                     }
-
-                    // Duplicate 3rd
+                    
+                    // Ignoring the 3rd duplicative element
                     while(left < right && nums[right] == nums[right - 1]) {
                         right--;
                     }
-
-                    // Move pointers
+                    
                     left++;
+                    right--;                       
+                } else if(sum > target) {
                     right--;
+                } else {
+                    left++;
                 }
             }
         }
+        
         return triplets;
     }
 };
