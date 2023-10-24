@@ -20,7 +20,8 @@ public:
     int peek() {
         if(output.empty()) {
             while(!input.empty()) {
-                output.push(input.top());
+                int value = input.top();
+                output.push(value);
                 input.pop();
             }
         }
@@ -33,21 +34,28 @@ public:
 };
 
 /*
-let's calculate the total cost of n pop() operations:
+    1,4,5,6
+    
+    stack 1 : 1 -> 4 -> 5 -> 6
+    stack 2 : 6 -> 5 -> 4 -> 1
+    pop : 1
+    stack 2 : 6 -> 5 -> 4 
+    push : 7
+    stack 1 : 4 -> 5 -> 6 -> 7
+    stack 2 : 7 -> 6 -> 5 -> 4
+    pop : 4
+    stack 2 : 7 -> 6 -> 5
+    print stack (queue implemented) : 5 -> 6 -> 7
+    
+    queue : 1 -> 4 -> 5 -> 6 
+    pop : 1
+    push : 7
+    queue : 4 -> 5 -> 6 -> 7
+    pop : 4
+    queue : 5 -> 6 -> 7
+    
+*/ 
 
-Total cost = O(n) (for the first pop()) + O(1) (for the subsequent pop() operations)
-
-Since there are n pop() operations in the sequence, the total cost for the n pop() operations will be:
-
-Total cost = n * O(1)
-
-Now, to find the amortized time complexity per pop() operation, we divide the total cost by n:
-
-Amortized time complexity = (n * O(1)) / n = O(1)
-
-So, the amortized time complexity of the pop() method is O(1). This means that the average time taken 
-for a single pop() operation over the entire sequence of n pop() operations is constant and not dependent on the number of elements in the queue
-*/
 
 
 /**
