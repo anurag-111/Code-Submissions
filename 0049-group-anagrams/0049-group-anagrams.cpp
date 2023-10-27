@@ -26,7 +26,7 @@ class Solution {
                 }
             }
             
-            cout << key << "key: " << endl;
+            cout << "key: " << key << endl;
             return key;
         }
     
