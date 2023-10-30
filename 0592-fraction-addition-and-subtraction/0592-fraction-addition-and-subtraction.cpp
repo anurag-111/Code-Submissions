@@ -1,7 +1,7 @@
 class Solution {
 public:
     string fractionAddition(string expression) {
-        int A = 0, B = 1, a, b;
+        int numeratorSum = 0, denominatorProduct = 1, currentNumerator, currentDenominator;
         size_t i = 0;
 
         while (i < expression.size()) {
@@ -15,30 +15,30 @@ public:
                 num = num * 10 + (expression[i] - '0');
                 i++;
             }
-            a = sign * num;
+            currentNumerator = sign * num;
 
             // Parse the denominator
             if (expression[i] == '/') {
                 i++;
-                b = 0;
+                currentDenominator = 0;
                 while (i < expression.size() && isdigit(expression[i])) {
-                    b = b * 10 + (expression[i] - '0');
+                    currentDenominator = currentDenominator * 10 + (expression[i] - '0');
                     i++;
                 }
             } else {
-                b = 1; // If no denominator, assume it's 1
+                currentDenominator = 1; // If no denominator, assume it's 1
             }
 
             // Perform the addition
-            A = A * b + a * B;
-            B *= b;
+            numeratorSum = numeratorSum * currentDenominator + currentNumerator * denominatorProduct;
+            denominatorProduct *= currentDenominator;
 
             // Simplify the fraction
-            int g = abs(gcd(A, B));
-            A /= g;
-            B /= g;
+            int gcdValue = abs(gcd(numeratorSum, denominatorProduct));
+            numeratorSum /= gcdValue;
+            denominatorProduct /= gcdValue;
         }
 
-        return to_string(A) + '/' + to_string(B);
+        return to_string(numeratorSum) + '/' + to_string(denominatorProduct);
     }
 };
