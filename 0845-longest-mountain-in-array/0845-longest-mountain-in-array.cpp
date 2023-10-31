@@ -18,6 +18,7 @@ public:
                 }
                 
                 maxLen = max(maxLen, (right - left + 1));
+                peak = right;
             }
         }
         return maxLen;
