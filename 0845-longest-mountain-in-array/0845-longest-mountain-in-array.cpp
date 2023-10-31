@@ -2,9 +2,7 @@ class Solution {
 public:
     int longestMountain(vector<int>& arr) {
         int maxLen = 0;
-        
         for(int peak = 1; peak < arr.size() - 1; peak++) {
-            // Find the peak element
             if(arr[peak] > arr[peak - 1] && arr[peak] > arr[peak + 1]) {
                 int left = peak - 1;
                 int right = peak + 1;
@@ -18,9 +16,9 @@ public:
                 }
                 
                 maxLen = max(maxLen, (right - left + 1));
-                peak = right;
             }
         }
+        
         return maxLen;
     }
 };
