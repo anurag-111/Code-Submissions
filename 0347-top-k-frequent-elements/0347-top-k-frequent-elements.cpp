@@ -8,7 +8,7 @@ public:
         }
         
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        for(auto itr = freq.begin(); itr != freq.end(); itr++) {
+        for(unordered_map<int, int> :: iterator itr = freq.begin(); itr != freq.end(); itr++) {
             pq.push({itr -> second, itr -> first});
             
             if(pq.size() > k) {
