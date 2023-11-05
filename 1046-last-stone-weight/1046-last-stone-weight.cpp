@@ -12,19 +12,11 @@ public:
             int x = pq.top();
             pq.pop();
             
-            if(y >= x) {
-                if(x == y) {
-                    continue;
-                } else if(x != y) {
-                    pq.push(y - x);
-                }
+            if(x != y) {
+                pq.push(y - x);
             }
         }
         
-        if(pq.empty()) {
-            return 0;
-        }
-        
-        return pq.top();
+        return pq.empty() == true ? 0 : pq.top();
     }
 };
