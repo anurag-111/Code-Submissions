@@ -12,6 +12,12 @@
 
 class Solution {
 public:
+    void nodeSwap(TreeNode *root) {
+        TreeNode *temp = root -> left;
+        root -> left = root -> right;
+        root -> right = temp;
+    }
+    
     TreeNode* invertTree(TreeNode* root) {
         if(root == NULL) {
             return root;
@@ -20,9 +26,7 @@ public:
         invertTree(root -> left);
         invertTree(root -> right);
         
-        TreeNode *temp = root -> left;
-        root -> left = root -> right;
-        root -> right = temp;
+        nodeSwap(root);
         
         return root;
     }
