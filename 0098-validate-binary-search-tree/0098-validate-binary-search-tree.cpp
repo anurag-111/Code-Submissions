@@ -19,7 +19,7 @@ public:
         }
         
         // processing conditions
-        if((root != NULL && root -> val <= minVal) || (root != NULL && root -> val >= maxVal)) {
+        if(root -> val <= minVal || root -> val >= maxVal) {
             return false;
         }
         
