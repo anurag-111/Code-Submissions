@@ -1,39 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
-private:
-	TreeNode* buildSubTree(vector<int> &preorder, vector<int> &inorder, int &preRootIndex, int left, int right, unordered_map<int, int> &inMap) {
-		if(left > right) {
-			return NULL;
-		}
-		
-		// Find the index of the current root element of the preorder traversal in the inorder traversal
-		// and then move to the next root index
-		int inPivotIndex = inMap[preorder[preRootIndex++]];
-		
-		// Creation of new node
-		TreeNode* node = new TreeNode(inorder[inPivotIndex]);
-		
-		// Recursively build the left sub-tree using the left elements present in the inorder traversal
-		node->left = buildSubTree(preorder, inorder, preRootIndex, left, inPivotIndex - 1, inMap);
-		
-		// Recursively build the right sub-tree using the right elements present in the inorder traversal
-		node->right = buildSubTree(preorder, inorder, preRootIndex, inPivotIndex + 1, right, inMap);
-		
-		return node;
-	}
-	
 public:
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        int preRootIndex = 0;
-        unordered_map<int, int> inMap;
-        
-        // Mapping of inorder elements -> index
-        for(int i = 0; i < inorder.size(); i++) {
-            inMap[inorder[i]] = i;
+    TreeNode *constructFunc(vector<int>& preorder, vector<int>& inorder, int &preorderIndex, int left, int right, unordered_map<int, int> &nodeToIndex) {
+        if(left > right) {
+            return NULL;
         }
         
-        return buildSubTree(preorder, inorder, preRootIndex, 0, inorder.size() - 1, inMap);
+        int pivotIndex = nodeToIndex[preorder[preorderIndex++]];
+        
+        TreeNode *node = new TreeNode(inorder[pivotIndex]);
+        
+        node -> left = constructFunc(preorder, inorder, preorderIndex, left, pivotIndex - 1, nodeToIndex);
+        node -> right = constructFunc(preorder, inorder, preorderIndex, pivotIndex + 1, right, nodeToIndex);
+        
+        return node;
+    }
+    
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int preorderIndex = 0;
+        unordered_map<int, int> nodeToIndex;
+        
+        for(int i = 0; i < preorder.size(); i++) {
+            nodeToIndex[inorder[i]] = i;
+        }
+        
+        return constructFunc(preorder, inorder, preorderIndex, 0, preorder.size() - 1, nodeToIndex);
     }
 };
-
-// Time Complexity : O(N)
-// Space Comlpexity : O(N)
