@@ -1,32 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
-private: 
-    int calculateDiameter(TreeNode *root, int &diameter) {
-        // Base Case: If the node is NULL, return 0.
-        if (root == NULL) {
+public:
+    int maxDiameter = 0;
+    
+    int calculateDiameter(TreeNode *root) {
+        if(root == NULL) {
             return 0;
         }
-
-        // Recursive calls to calculate heights of left and right subtrees.
-        int leftHeight = calculateDiameter(root->left, diameter);
-        int rightHeight = calculateDiameter(root->right, diameter);
-
-        // The height of the current node
+        
+        int leftHeight = calculateDiameter(root -> left);
+        int rightHeight = calculateDiameter(root -> right);
+        
         int height = 1 + max(leftHeight, rightHeight);
-
-        // The current diameter passing through the current node
+        
         int currentDiameter = leftHeight + rightHeight;
-
-        // Update the overall maximum diameter found so far
-        diameter = max(diameter, currentDiameter);
-
-        // Return the height of the current node
-        return height;
+        
+        maxDiameter = max(currentDiameter, maxDiameter);
+        
+        return height;            
     }
-
-public:
-    int diameterOfBinaryTree(TreeNode *root) {
-        int diameter = 0;
-        calculateDiameter(root, diameter);
-        return diameter;
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        calculateDiameter(root);
+        return maxDiameter;
     }
 };
