@@ -17,8 +17,8 @@ public:
             return list1;
         }
         
-        ListNode *dummyNode = new ListNode(-1);
-        ListNode *current = dummyNode;
+        ListNode *dummy = new ListNode(-1);
+        ListNode *current = dummy;
         
         while(list1 != NULL && list2 != NULL) {
             if(list1 -> val <= list2 -> val) {
@@ -28,31 +28,18 @@ public:
                 current -> next = list2;
                 list2 = list2 -> next;
             }
-            current = current -> next;            
+            
+            current = current -> next;
         }
         
-        if(list1 != NULL) {
+        if(list1) {
             current -> next = list1;
         }
         
-        if(list2 != NULL) {
+        if(list2) {
             current -> next = list2;
         }
         
-        return dummyNode -> next;
-        
+        return dummy -> next;
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
